@@ -15,6 +15,6 @@ export const someAC = (todolistId: string) => {
 }
 
 
-export type SomeActionType = ReturnType<typeof>
+export type SomeActionType = ReturnType<typeof someAC>
 
 type ActionType= SomeActionType
