@@ -29,6 +29,15 @@ export const tasksReducer = (state: TasksStateType, action: ActionType): TasksSt
                         : t)
             }
         }
+        case 'CHANGE-TASK-TITLE': {
+            return {
+                ...state,
+                [action.payload.todolistId]:
+                    state[action.payload.todolistId].map
+                    (t => t.id == action.payload.taskId ?
+                        {...t, title: action.payload.title} : t)
+            }
+        }
 
         default:
             throw new Error("I don't understand this type")
@@ -45,9 +54,13 @@ export const addTaskAC = (payload: {todolistId: string, title: string}) => {
 export const changeTaskStatusAC = (payload: {todolistId: string, taskId: string, isDone: boolean}) => {
     return {type: 'CHANGE-TASK-STATUS', payload} as const
 }
+export const changeTaskTitleAC = (payload: {todolistId: string, taskId: string, title: string}) => {
+    return {type: 'CHANGE-TASK-TITLE', payload} as const
+}
 
 export type removeTaskType = ReturnType<typeof removeTaskAC>
 export type addTaskType = ReturnType<typeof addTaskAC>
 export type changeTaskStatusType = ReturnType<typeof changeTaskStatusAC>
+export type changeTaskTitleType = ReturnType<typeof changeTaskTitleAC>
 
-type ActionType=removeTaskType | addTaskType | changeTaskStatusType
+type ActionType=removeTaskType | addTaskType | changeTaskStatusType | changeTaskTitleType
