@@ -1,12 +1,8 @@
 import {TasksStateType} from "../App";
 import {v1} from "uuid";
-import exp from "constants";
 
 export const tasksReducer = (state: TasksStateType, action: ActionType): TasksStateType => {
     switch (action.type){
-        case '': {
-            return state
-        }
         case 'REMOVE-TASK': {
             debugger
             return {...state,
@@ -24,7 +20,7 @@ export const tasksReducer = (state: TasksStateType, action: ActionType): TasksSt
         }
 
         case 'CHANGE-TASK-STATUS': {
-            const newState = {
+            return {
                 ...state,
                 [action.payload.todolistId]:
                     state[action.payload.todolistId].map
@@ -32,7 +28,6 @@ export const tasksReducer = (state: TasksStateType, action: ActionType): TasksSt
                         ? {...t, isDone: action.payload.isDone}
                         : t)
             }
-            return newState
         }
 
         default:
@@ -40,9 +35,6 @@ export const tasksReducer = (state: TasksStateType, action: ActionType): TasksSt
     }
 }
 
-export const someAC = (todolistId: string) => {
-    return {type: '', payload: {}} as const
-}
 export const removeTaskAC = (payload: {taskId: string; todolistId : string}) => {
     return {type: 'REMOVE-TASK', payload} as const
 }
@@ -54,9 +46,8 @@ export const changeTaskStatusAC = (payload: {todolistId: string, taskId: string,
     return {type: 'CHANGE-TASK-STATUS', payload} as const
 }
 
-export type SomeActionType = ReturnType<typeof someAC>
 export type removeTaskType = ReturnType<typeof removeTaskAC>
 export type addTaskType = ReturnType<typeof addTaskAC>
 export type changeTaskStatusType = ReturnType<typeof changeTaskStatusAC>
 
-type ActionType= SomeActionType | removeTaskType | addTaskType | changeTaskStatusType
+type ActionType=removeTaskType | addTaskType | changeTaskStatusType
